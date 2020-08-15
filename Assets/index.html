@@ -10,10 +10,97 @@
 <body>
 <!-- Using CSS and Bootstrap create a general look for your page -->
 
+<!-- Set up the structure -->
+
+    <div id="quiz"></div>
+    <button id="submit">Get Results</button>
+    <div id="results"></div>
+
 
 
 
     <script>
+
+        var myQuestions = [
+            {
+                question: "What is 10 divided by 2?",
+                answers: {
+                    a: '3',
+                    b: '5',
+                    c: '115'
+                },
+                correctAnswer: 'b'
+            },
+
+            {
+                question: "What is 30 divided by 3?",
+                answers: {
+                    a: '3',
+                    b: '5',
+                    c: '10'
+                },
+                correctAnswer: 'c'
+            }
+        ];
+
+
+        // Create a function to generate a quiz. Function will need these inputs: quiz questions, a place to put the quiz, a place for the results, a submit button.
+
+        function generateQuiz(questions, quizContainer, resultsContainer, submitButton) {
+
+            function showQuestions(questions, quizContainer) {
+                // we'll need a place to store the output and the answer choices
+                var output = [];
+                var answers;
+
+                // for each question...
+
+                for (var i = 0, i < questions.length; i++) {
+
+                    // first reset teh list of answers
+                    answers = [];
+
+                    // for each available answer to this question...
+
+                    for (letter in questions[i].answers) {
+
+                        // ... add an html radio button
+
+                        answers.push(
+                            '<label>'
+                                + '<input type="radio" name="question'+i+'" value="'+letter+'">'
+                                + letter + ': '
+                                + questions[i].answers[letter]
+                            + '</label>'
+                        );
+                    }
+
+                    // add this question and its answers to the output
+                    output.push(
+                        '<div class="question">' + questions[i].question + '</div>'
+                        + '<div class="answers">' + answers.join('') + '</div>'
+                    );
+                }
+
+                // finally combine our output list inot one string of html and put it on the page
+                quizContainer.innerHTML = output.join('');
+            }
+
+            function showResults(questions, quizContainer, resultsContainer) {
+                // code will go here
+            }
+
+        // show the questions
+        showQuestions(questions, quizContainer);
+
+        // when user clicks submit, show results
+        submitButton.onclick = function() {
+            showResults(questions, quizContainer, resultsContainer);
+            }
+
+        }
+
+
 
         // click start button - addEventListener. When start button is clicked, a timer starts and you are presented with a question.
 
