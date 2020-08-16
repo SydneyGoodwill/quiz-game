@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<!-- Using CSS and Bootstrap create a general look for your page -->
+<!-- Using CSS and Bootstrap create a general look for page -->
 
 <!-- Set up the structure -->
 
@@ -23,28 +23,35 @@
 
         var myQuestions = [
             {
-                question: "What is 10 divided by 2?",
+                question: "___ tag is an extension to HTML that can enclose any number of JavaScript statements.",
                 answers: {
-                    a: '3',
-                    b: '5',
-                    c: '115'
+                    a: '<script>',
+                    b: '<body>',
+                    c: '<head>',
+                    d: '<title>'
                 },
-                correctAnswer: 'b'
+                correctAnswer: 'a'
             },
 
             {
-                question: "What is 30 divided by 3?",
+                question: "The syntax of Eval is _______.",
                 answers: {
-                    a: '3',
-                    b: '5',
-                    c: '10'
+                    a: '[objectName.]eval(numeriC.',
+                    b: '[objectName.]eval(string)',
+                    c: '[EvalName.]eval(string)',
+                    d: '[EvalName.]eval(numeriC.'
                 },
-                correctAnswer: 'c'
+                correctAnswer: 'b'
             }
         ];
 
+        var quizContainer = document.getElementById('quiz');
+        var resultsContainer = document.getElementById('results');
+        var submitButton = document.getElementById('submit');
 
         // Create a function to generate a quiz. Function will need these inputs: quiz questions, a place to put the quiz, a place for the results, a submit button.
+        
+        generateQuiz(myQuestions, quizContainer, resultsContainer, submitButton);
 
         function generateQuiz(questions, quizContainer, resultsContainer, submitButton) {
 
@@ -55,7 +62,7 @@
 
                 // for each question...
 
-                for (var i = 0, i < questions.length; i++) {
+                for (var i = 0; i < questions.length; i++) {
 
                     // first reset teh list of answers
                     answers = [];
@@ -87,7 +94,40 @@
             }
 
             function showResults(questions, quizContainer, resultsContainer) {
-                // code will go here
+                
+                // gather answer containers from our quiz
+                var answerContainers = quizContainer.querySelectorAll('.answers');
+
+                // keep track of user's answers
+                var userAnswer = '';
+                var numCorrect = 0;
+
+                // vor each question...
+
+                for (var i = 0; i < questions.length; i++) {
+
+                    //find selected answer
+                    userAnswer = (answerContainers[i].querySelector('input[name=question'+i+']:checked')||{}).value;
+
+                    // if answer is correct
+                    if (userAnswer === questions[i].correctAnswer) {
+                        // add to the number of correct answers
+                        numCorrect++;
+
+                        //color the answers green
+                        answerContainers[i].style.color = 'lightgreen';
+                    }
+
+                    // if answers is wrong or blank
+                    else {
+                        // color the answers red
+                        answerContainers[i].style.color = 'red';
+                    }
+                }
+
+                // show number of correct answers out of total
+
+                resultsContainer.innerHTML = numCorrect + ' out of ' + questions.length;
             }
 
         // show the questions
@@ -99,7 +139,6 @@
             }
 
         }
-
 
 
         // click start button - addEventListener. When start button is clicked, a timer starts and you are presented with a question.
